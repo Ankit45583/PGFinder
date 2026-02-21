@@ -1,0 +1,123 @@
+/* ================= RESET ================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= ROOT VARIABLES ================= */
+:root {
+  --bg-dark: #020617;
+  --bg-secondary: #0f172a;
+
+  --primary: #6366f1;     /* indigo */
+  --secondary: #22d3ee;   /* cyan */
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+/* ================= BODY ================= */
+body {
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.18),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(34, 211, 238, 0.18),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--bg-secondary), var(--bg-dark));
+
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================= LINKS ================= */
+a {
+  text-decoration: none;
+  color: var(--secondary);
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* ================= TEXT HELPERS ================= */
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ================= BUTTON BASE ================= */
+button {
+  font-family: inherit;
+  outline: none;
+}
+
+/* ================= GLASS UTILITY ================= */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--primary),
+    var(--secondary)
+  );
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--secondary),
+    var(--primary)
+  );
+}
+
+/* ================= SELECTION ================= */
+::selection {
+  background: rgba(99, 102, 241, 0.35);
+  color: #ffffff;
+}

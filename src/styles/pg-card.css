@@ -1,0 +1,33 @@
+.pg-card {
+  background:linear-gradient(to right, #040344 , #470544);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #1e293b;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.pg-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+.pg-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.pg-price {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.pg-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 20px;
+  background: #022c22;
+  color: #4ade80;
+}
