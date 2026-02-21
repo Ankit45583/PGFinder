@@ -1,16 +1,46 @@
-# React + Vite
+# 🏠 FindMyPG
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FindMyPG is a role-based PG (Paying Guest) discovery platform built using **React + Vite**.  
+The platform helps students find **verified PG accommodations** without brokers, while allowing PG owners to list their properties and admins to verify listings.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### 👩‍🎓 Student
+- Browse **admin-verified PGs**
+- Search PGs by name or location
+- Filter by sharing type
+- View detailed PG information
+- Contact PG owner directly (after login)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🧑‍💼 Owner
+- Register & login as PG owner
+- Add new PG listings
+- View and manage own PGs
+- Listings become visible only after admin verification
 
-## Expanding the ESLint configuration
+### 🛡️ Admin
+- Secure admin login (no public registration)
+- Verify or reject PG listings
+- Maintain authenticity of the platform
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🧠 Key Highlights
+- Role-based authentication (Student / Owner / Admin)
+- Protected routes using React Router
+- Only **verified PGs** visible to students
+- No broker or middleman involvement
+- Context API for global state management
+- Clean, professional UI with dark theme
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React + Vite
+- **Routing:** React Router DOM
+- **State Management:** Context API
+- **Styling:** Custom CSS
+- **Build Tool:** Vite
