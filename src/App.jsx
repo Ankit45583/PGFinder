@@ -3,6 +3,7 @@ import Navbar from "./components/common/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import { PGProvider } from "./context/PGContext";
+import Footer from "./components/common/Footer";
 
 function App() {
   return (
@@ -10,7 +11,10 @@ function App() {
       <PGProvider>
         <BrowserRouter>
           <Navbar />        
-          <AppRoutes />     
+          <main style={{ flex: 1 }}>
+            <AppRoutes />
+          </main> 
+          <Footer/>
         </BrowserRouter>
       </PGProvider>
     </AuthProvider>

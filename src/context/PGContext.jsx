@@ -25,6 +25,7 @@ export const PGProvider = ({ children }) => {
       {
         ...newPG,
         isVerified: false,
+        images: newPG.images || [], // ensure images array exists
       },
     ]);
   };
@@ -38,15 +39,13 @@ export const PGProvider = ({ children }) => {
     );
   };
 
-  // Delete krna PGs ko 
-
-  const deletePG= (id)=>
-  {
-     setPgs((prev) => prev.filter((pg)=> pg.id !== id));
+  // Delete PG
+  const deletePG = (id) => {
+    setPgs((prev) => prev.filter((pg) => pg.id !== id));
   };
 
   return (
-    <PGContext.Provider value={{ pgs, addPG, verifyPG , deletePG }}>
+    <PGContext.Provider value={{ pgs, addPG, verifyPG, deletePG }}>
       {children}
     </PGContext.Provider>
   );

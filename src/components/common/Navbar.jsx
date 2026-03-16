@@ -51,9 +51,7 @@ const Navbar = () => {
 
           {user && role === "admin" && (
             <>
-              <span className="role-badge admin">Admin</span>
               <NavLink to="/admin/dashboard">Dashboard</NavLink>
-              <NavLink to="/admin/verify-pg">Verify PG</NavLink>
               <NavLink to="/admin/users">Users</NavLink>
               <button onClick={logout} className="logout-btn">
                 Logout

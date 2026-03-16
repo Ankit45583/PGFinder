@@ -95,16 +95,21 @@
 
 /* ================= LOGOUT ================= */
 .logout-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #8b5cf6;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 5px 12px;
-  border-radius: 10px;
-  color: #e5e7eb;
+  color: white;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .logout-btn:hover {
-  border-color: #f87171;
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.1);
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+  color: white;
+}
+.logout-btn:focus {
+  outline: none;
+  box-shadow: none;
 }

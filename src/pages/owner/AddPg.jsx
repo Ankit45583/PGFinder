@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { PGContext } from "../../context/PGContext";
-import AddPGForm from "../../components/forms/AddPgForm";
 import "./addPG.css";
 
 const AddPG = () => {
@@ -11,14 +10,33 @@ const AddPG = () => {
     location: "",
     price: "",
     sharing: "",
+    images: [], // images array
   });
+
+  const [imageUrl, setImageUrl] = useState(""); // temp input for adding one image
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleAddImage = () => {
+    if (imageUrl.trim() === "") return;
+
+    setFormData({
+      ...formData,
+      images: [...formData.images, imageUrl.trim()],
+    });
+
+    setImageUrl(""); // clear input
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!formData.images.length) {
+      alert("Please add at least one image!");
+      return;
+    }
 
     addPG({
       id: Date.now(),
@@ -30,12 +48,15 @@ const AddPG = () => {
 
     alert("PG Added Successfully");
 
+    // reset form
     setFormData({
       name: "",
       location: "",
       price: "",
       sharing: "",
+      images: [],
     });
+    setImageUrl("");
   };
 
   return (
@@ -72,6 +93,31 @@ const AddPG = () => {
           onChange={handleChange}
         />
 
+        {/* Image URL input */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+          <button type="button" onClick={handleAddImage}>
+            Add Image
+          </button>
+        </div>
+
+        {/* Preview added images */}
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "15px" }}>
+          {formData.images.map((img, idx) => (
+            <img
+              key={idx}
+              src={img}
+              alt={`PG ${idx}`}
+              style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
+            />
+          ))}
+        </div>
+
         <button type="submit">Add PG</button>
       </form>
     </div>
@@ -79,4 +125,3 @@ const AddPG = () => {
 };
 
 export default AddPG;
-

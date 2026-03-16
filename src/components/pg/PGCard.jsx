@@ -23,6 +23,21 @@ const PGCard = ({ pg }) => {
         e.currentTarget.style.boxShadow = "none";
       }}
     >
+      {/* IMAGE */}
+      {pg.images && pg.images.length > 0 && (
+        <img
+          src={pg.images[0]}
+          alt={pg.name}
+          style={{
+            width: "100%",
+            height: "180px",
+            objectFit: "cover",
+            borderRadius: "12px",
+            marginBottom: "15px",
+          }}
+        />
+      )}
+
       <h3 style={{ marginBottom: "10px", color: "#e5e7eb" }}>
         {pg.name}
       </h3>

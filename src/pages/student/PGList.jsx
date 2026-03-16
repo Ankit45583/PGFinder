@@ -2,23 +2,27 @@ import { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PGContext } from "../../context/PGContext";
 import PGCard from "../../components/pg/PGCard";
+import PGFilter from "../../components/pg/PgFilter";
 import "./pg-list.css";
 
 const PGList = () => {
   const { pgs } = useContext(PGContext);
   const [searchParams] = useSearchParams();
 
-  const featureType = searchParams.get("type"); // verified | pricing | owner
+  const featureType = searchParams.get("type");
 
   const [search, setSearch] = useState("");
   const [sharing, setSharing] = useState("all");
 
+  // Verified PGs only
   let filteredPGs = pgs.filter((pg) => pg.isVerified);
 
+  // Owner filter
   if (featureType === "owner") {
     filteredPGs = filteredPGs.filter((pg) => pg.ownerRole === "owner");
   }
 
+  // Search + sharing filter
   filteredPGs = filteredPGs.filter(
     (pg) =>
       (pg.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -44,24 +48,13 @@ const PGList = () => {
         </p>
       </div>
 
-      {/* 🔍 FILTER BAR */}
-      <div className="filter-bar">
-        <input
-          type="text"
-          placeholder="Search by PG name or location..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select
-          value={sharing}
-          onChange={(e) => setSharing(e.target.value)}
-        >
-          <option value="all">All Sharing</option>
-          <option value="Single">Single</option>
-          <option value="2 Sharing">2 Sharing</option>
-        </select>
-      </div>
+      {/* FILTER COMPONENT */}
+      <PGFilter
+        search={search}
+        setSearch={setSearch}
+        sharing={sharing}
+        setSharing={setSharing}
+      />
 
       {/* PG GRID */}
       <div className="pg-grid">

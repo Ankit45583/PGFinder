@@ -1,20 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-
 import Home from "../pages/student/Home";
 import PGList from "../pages/student/PGList";
 import PGDetails from "../pages/student/PGDetails";
-
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
-
 import OwnerDashboard from "../pages/owner/OwnerDashboard";
 import AddPG from "../pages/owner/AddPg";
 import MyPGs from "../pages/owner/MyPGs";
-
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import VerifyPG from "../pages/admin/VerifyPG";
-
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import Users from "../pages/admin/Users";
+
 
 const AppRoutes = () => {
   return (
@@ -68,6 +65,12 @@ const AppRoutes = () => {
             <VerifyPG />
           </ProtectedRoute>
         }
+      />
+      <Route
+          path="/admin/users"
+          element={<ProtectedRoute role="admin"> <Users />
+       </ProtectedRoute>
+       }
       />
     </Routes>
   );
