@@ -1,24 +1,23 @@
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "./components/common/Navbar";
-import AppRoutes from "./routes/AppRoutes";
-import { AuthProvider } from "./context/AuthContext";
-import { PGProvider } from "./context/PGContext";
-import Footer from "./components/common/Footer";
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes'
+import { AuthProvider } from './context/AuthContext'
+import { PGProvider } from './context/PGContext'
+import { UserProvider } from './context/UserContext'
+import './App.css'
 
 function App() {
   return (
-    <AuthProvider>
-      <PGProvider>
-        <BrowserRouter>
-          <Navbar />        
-          <main style={{ flex: 1 }}>
+    <BrowserRouter>
+      <AuthProvider>
+        <UserProvider>
+          <PGProvider>
             <AppRoutes />
-          </main> 
-          <Footer/>
-        </BrowserRouter>
-      </PGProvider>
-    </AuthProvider>
-  );
+          </PGProvider>
+        </UserProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App

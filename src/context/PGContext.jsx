@@ -1,52 +1,84 @@
-import { createContext, useState, useEffect } from "react";
-import initialPGData from "../data/pgData";
+import React, { createContext, useContext, useState, useEffect } from 'react'
+import { pgData as initialData } from '../data/pgData'
 
-export const PGContext = createContext();
+ export const PGContext = createContext()
+
+export const usePG = () => {
+  const context = useContext(PGContext)
+  if (!context) throw new Error('usePG must be used within PGProvider')
+  return context
+}
 
 export const PGProvider = ({ children }) => {
+  const [pgs, setPgs] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [filters, setFilters] = useState({
+    search: '',
+    minRent: '',
+    maxRent: '',
+    gender: '',
+    facilities: [],
+    location: ''
+  })
 
-  // 🔹 localStorage se load
-  const getInitialPGs = () => {
-    const saved = localStorage.getItem("pgs");
-    return saved ? JSON.parse(saved) : initialPGData;
-  };
-
-  const [pgs, setPgs] = useState(getInitialPGs);
-
-  // 🔹 localStorage me save
   useEffect(() => {
-    localStorage.setItem("pgs", JSON.stringify(pgs));
-  }, [pgs]);
+    const saved = localStorage.getItem('pg_listings')
+    if (saved) {
+      setPgs(JSON.parse(saved))
+    } else {
+      setPgs(initialData)
+      localStorage.setItem('pg_listings', JSON.stringify(initialData))
+    }
+  }, [])
 
-  // 🔹 Owner add PG
-  const addPG = (newPG) => {
-    setPgs((prev) => [
-      ...prev,
-      {
-        ...newPG,
-        isVerified: false,
-        images: newPG.images || [], // ensure images array exists
-      },
-    ]);
-  };
+  const savePgs = (newPgs) => {
+    setPgs(newPgs)
+    localStorage.setItem('pg_listings', JSON.stringify(newPgs))
+  }
 
-  // 🔹 Admin verify PG
-  const verifyPG = (id) => {
-    setPgs((prev) =>
-      prev.map((pg) =>
-        pg.id === id ? { ...pg, isVerified: true } : pg
-      )
-    );
-  };
+  const addPG = (pgData) => {
+    const newPG = {
+      ...pgData,
+      id: Date.now().toString(),
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      rating: 0,
+      reviews: []
+    }
+    const updated = [...pgs, newPG]
+    savePgs(updated)
+    return newPG
+  }
 
-  // Delete PG
+  const updatePG = (id, data) => {
+    const updated = pgs.map(pg => pg.id === id ? { ...pg, ...data } : pg)
+    savePgs(updated)
+  }
+
   const deletePG = (id) => {
-    setPgs((prev) => prev.filter((pg) => pg.id !== id));
-  };
+    const updated = pgs.filter(pg => pg.id !== id)
+    savePgs(updated)
+  }
+
+  const verifyPG = (id) => {
+    updatePG(id, { status: 'verified' })
+  }
+
+  const rejectPG = (id, reason) => {
+    updatePG(id, { status: 'rejected', rejectionReason: reason })
+  }
+
+  const getVerifiedPGs = () => pgs.filter(pg => pg.status === 'verified')
+  const getPendingPGs = () => pgs.filter(pg => pg.status === 'pending')
+  const getOwnerPGs = (ownerId) => pgs.filter(pg => pg.ownerId === ownerId)
 
   return (
-    <PGContext.Provider value={{ pgs, addPG, verifyPG, deletePG }}>
+    <PGContext.Provider value={{
+      pgs, loading, filters, setFilters,
+      addPG, updatePG, deletePG, verifyPG, rejectPG,
+      getVerifiedPGs, getPendingPGs, getOwnerPGs
+    }}>
       {children}
     </PGContext.Provider>
-  );
-};
+  )
+}

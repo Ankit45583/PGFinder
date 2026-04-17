@@ -1,33 +1,221 @@
 .pg-card {
-  background:linear-gradient(to right, #040344 , #470544);
-  border-radius: 14px;
-  padding: 20px;
-  border: 1px solid #1e293b;
-  transition: all 0.25s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
 }
 
 .pg-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 40px rgba(108, 99, 255, 0.2);
 }
 
-.pg-title {
-  font-size: 18px;
-  margin-bottom: 8px;
+/* Image */
+.pg-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
 }
 
-.pg-price {
-  color: #22c55e;
-  font-weight: bold;
+.pg-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.pg-badge {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 6px 12px;
-  font-size: 12px;
+.pg-card:hover .pg-card-image img {
+  transform: scale(1.05);
+}
+
+.img-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.img-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition);
+}
+
+.img-dot.active {
+  background: white;
+  width: 16px;
+  border-radius: 3px;
+}
+
+.pg-card-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gender-badge,
+.status-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+  text-transform: capitalize;
+}
+
+.gender-badge.male { background: rgba(108, 99, 255, 0.85); color: white; }
+.gender-badge.female { background: rgba(255, 101, 132, 0.85); color: white; }
+.gender-badge.both { background: rgba(67, 233, 123, 0.85); color: #0f0f1a; }
+
+.available-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(72, 187, 120, 0.9);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+/* Content */
+.pg-card-content {
+  padding: 1rem 1.25rem 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pg-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.pg-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+}
+
+.pg-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #f6c90e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.star-icon { font-size: 0.75rem; }
+
+.pg-card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.pg-card-location svg { flex-shrink: 0; color: var(--primary); }
+
+.pg-card-facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.facility-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
   border-radius: 20px;
-  background: #022c22;
-  color: #4ade80;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--primary-light);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.facility-tag.more {
+  background: rgba(160, 174, 192, 0.1);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.pg-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.pg-rent {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+.rent-amount {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.rent-period {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.view-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.02);
+}
+
+.pg-card-actions {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }

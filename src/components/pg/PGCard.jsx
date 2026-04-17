@@ -1,69 +1,121 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FiMapPin, FiStar, FiHome, FiWifi, FiZap, FiEye } from 'react-icons/fi'
+import { MdOutlineFastfood } from 'react-icons/md'
+import { formatCurrency, getStatusColor, getStatusBg } from '../../utils/helpers'
+import '../../styles/pg-card.css'
 
-const PGCard = ({ pg }) => {
-  const navigate = useNavigate();
+const facilityIcons = {
+  'WiFi': <FiWifi />,
+  'Meals': <MdOutlineFastfood />,
+  'Power Backup': <FiZap />,
+}
+
+const PGCard = ({ pg, showStatus = false, actions = null }) => {
+  const navigate = useNavigate()
+  const [imgIndex, setImgIndex] = useState(0)
+
+  const handleCardClick = () => {
+    navigate(`/pg/${pg.id}`)
+  }
 
   return (
-    <div
-      onClick={() => navigate(`/pg/${pg.id}`)}
-      style={{
-        cursor: "pointer",
-        background: "#111827",
-        borderRadius: "14px",
-        padding: "20px",
-        border: "1px solid #1f2937",
-        transition: "all 0.25s ease",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-6px)";
-        e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      {/* IMAGE */}
-      {pg.images && pg.images.length > 0 && (
+    <div className="pg-card" onClick={handleCardClick}>
+      {/* Image */}
+      <div className="pg-card-image">
         <img
-          src={pg.images[0]}
+          src={pg.images?.[imgIndex] || 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800'}
           alt={pg.name}
-          style={{
-            width: "100%",
-            height: "180px",
-            objectFit: "cover",
-            borderRadius: "12px",
-            marginBottom: "15px",
+          onError={(e) => {
+            e.target.src = 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800'
           }}
         />
-      )}
 
-      <h3 style={{ marginBottom: "10px", color: "#e5e7eb" }}>
-        {pg.name}
-      </h3>
+        {pg.images?.length > 1 && (
+          <div className="img-dots">
+            {pg.images.map((_, i) => (
+              <button
+                key={i}
+                className={`img-dot ${i === imgIndex ? 'active' : ''}`}
+                onClick={(e) => { e.stopPropagation(); setImgIndex(i) }}
+              />
+            ))}
+          </div>
+        )}
 
-      <p>📍 {pg.location}</p>
-      <p>👥 {pg.sharing}</p>
-      <p style={{ fontWeight: "bold", color: "#00e5ff" }}>
-        ₹{pg.price}
-      </p>
+        <div className="pg-card-badges">
+          <span className={`gender-badge ${pg.gender}`}>
+            {pg.gender === 'male' ? '👨 Boys' : pg.gender === 'female' ? '👩 Girls' : '👥 Co-ed'}
+          </span>
+          {showStatus && (
+            <span
+              className="status-badge"
+              style={{ color: getStatusColor(pg.status), background: getStatusBg(pg.status) }}
+            >
+              {pg.status}
+            </span>
+          )}
+        </div>
 
-      <span
-        style={{
-          display: "inline-block",
-          marginTop: "12px",
-          padding: "6px 12px",
-          borderRadius: "20px",
-          fontSize: "12px",
-          background: "#064e3b",
-          color: "#34d399",
-          fontWeight: 600,
-        }}
-      >
-        ✔ Verified
-      </span>
+        {pg.availableRooms > 0 && (
+          <div className="available-tag">
+            {pg.availableRooms} rooms available
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="pg-card-content">
+        <div className="pg-card-header">
+          <h3 className="pg-card-name">{pg.name}</h3>
+          {pg.rating > 0 && (
+            <div className="pg-rating">
+              <FiStar className="star-icon" />
+              <span>{pg.rating}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="pg-card-location">
+          <FiMapPin />
+          <span>{pg.location}</span>
+        </div>
+
+        <div className="pg-card-facilities">
+          {pg.facilities?.slice(0, 4).map(facility => (
+            <span key={facility} className="facility-tag">
+              {facilityIcons[facility] || <FiHome />}
+              {facility}
+            </span>
+          ))}
+          {pg.facilities?.length > 4 && (
+            <span className="facility-tag more">+{pg.facilities.length - 4}</span>
+          )}
+        </div>
+
+        <div className="pg-card-footer">
+          <div className="pg-rent">
+            <span className="rent-amount">{formatCurrency(pg.rent)}</span>
+            <span className="rent-period">/month</span>
+          </div>
+
+          <button
+            className="view-btn"
+            onClick={(e) => { e.stopPropagation(); handleCardClick() }}
+          >
+            <FiEye />
+            View Details
+          </button>
+        </div>
+
+        {actions && (
+          <div className="pg-card-actions" onClick={e => e.stopPropagation()}>
+            {actions}
+          </div>
+        )}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default PGCard;
+export default PGCard
